@@ -1,14 +1,18 @@
-import { Query, Resolver } from "@nestjs/graphql";
+import { Args, Int, Query, Resolver } from "@nestjs/graphql";
 import { User } from "../models/User";
+import { mockUsers } from "src/mockData";
 
 @Resolver()
 export class UserResolver{
-    @Query(returns => User)
-    getUser(){
-        return{
-            id: 1,
-            username: 'john_doe',
-            displayName: 'John Doe'
-        }
+
+    @Query(() => User,{nullable: true})
+    getUserById(@Args('id',{type:()=>Int}) id: Number){
+        return mockUsers.find(user => user.id === id);
     }
+
+    @Query(() => [User]) 
+    getUsers(){
+        return mockUsers;
+    }
+
 }

@@ -4,10 +4,11 @@
 
 type User {
   id: Int!
-  username: String!
+  userName: String!
   displayName: String
 }
 
 type Query {
-  getUser: User!
+  getUserById(id: Int!): User
+  getUsers: [User!]!
 }
