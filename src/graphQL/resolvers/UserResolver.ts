@@ -3,6 +3,7 @@ import { User } from "../models/User";
 import { mockUsers } from "src/graphQL/mock/UserData";
 import { UserSettings } from "../models/UserSettings";
 import { mockUserSettings } from "../mock/UserSettingsData";
+import { CreateUserInput } from "../utils/CreateUserInput";
 
 @Resolver((of)=> User)
 export class UserResolver{
@@ -23,7 +24,8 @@ export class UserResolver{
     }
 
     @Mutation(() => User)
-    createUser(@Args('userName') userName: string, @Args('displayName') displayName: string){
+    createUser(@Args('createUserData') creataUserData : CreateUserInput){
+        const {userName, displayName} = creataUserData;
         const newUser = {
             id: mockUsers.length + 1,
             userName,
