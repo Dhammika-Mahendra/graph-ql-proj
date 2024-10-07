@@ -4,9 +4,13 @@ import { mockUsers } from "src/graphQL/mock/UserData";
 import { UserSettings } from "../models/UserSettings";
 import { mockUserSettings } from "../mock/UserSettingsData";
 import { CreateUserInput } from "../utils/CreateUserInput";
+import { Inject } from "@nestjs/common";
+import { UserService } from "src/Services/UserService";
 
 @Resolver((of)=> User)
 export class UserResolver{
+
+    constructor(@Inject(UserService) private userService: UserService){}
 
     @Query(() => User,{nullable: true})
     getUserById(@Args('id',{type:()=>Int}) id: Number){
@@ -15,7 +19,7 @@ export class UserResolver{
 
     @Query(() => [User]) 
     getUsers(){
-        return mockUsers;
+        return this.userService.getUsers();
     }
 
     @ResolveField(() => UserSettings, { name: 'settings', nullable: true })

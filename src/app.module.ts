@@ -8,6 +8,7 @@ import { UserSettingsResolver } from './graphQL/resolvers/UserSettingsResolver';
 import { TypeOrmModule} from '@nestjs/typeorm';
 import { User } from './graphQL/models/User';
 import { UserSettings } from './graphQL/models/UserSettings';
+import { UsersModule } from './graphQL/dataModules/users.modules';
 
 @Module({
   imports: [
@@ -24,9 +25,10 @@ import { UserSettings } from './graphQL/models/UserSettings';
       database: 'employeeDB',
       entities: [User, UserSettings],
       synchronize: true,
-    })
+    }),
+    UsersModule
   ],
   controllers: [AppController],
-  providers: [AppService,UserResolver,UserSettingsResolver],
+  providers: [AppService,UserSettingsResolver],
 })
 export class AppModule {}
